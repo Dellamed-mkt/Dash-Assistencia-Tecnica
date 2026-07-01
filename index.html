@@ -36,6 +36,7 @@ html, body {
 }
 body { display: flex; flex-direction: column; min-height: 100vh; }
 ::selection { background: rgba(255,255,255,0.20); color: var(--branco); }
+.card ::selection, .card-mini ::selection { background: rgba(0,47,99,0.25); color: var(--navy-1); }
 .search-box input::selection { background: rgba(0,47,99,0.20); color: var(--texto-input); }
 
 /* NAV */
@@ -247,24 +248,60 @@ h1 {
 .results-area.show { opacity: 1; }
 .results-area.hidden { display: none; }
 .results-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 8px;
+  margin-bottom: 28px;
 }
-.results-header h2 {
-  font-size: 20px;
-  font-weight: 600;
+/* Raio section header */
+#results-raio-section .results-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 16px;
+  border-left: 4px solid var(--vermelho);
+}
+#results-raio-section .results-header h2 {
+  font-size: 24px;
+  font-weight: 700;
   color: var(--branco);
   letter-spacing: -0.025em;
+  margin: 0;
+  line-height: 1.2;
 }
-#results-count {
+@media (min-width: 640px) {
+  #results-raio-section .results-header h2 { font-size: 28px; }
+}
+#results-raio-count {
   font-size: 14px;
-  color: rgba(191, 219, 254, 0.70);
+  color: rgba(219, 234, 254, 0.65);
+  font-weight: 400;
 }
-#results-message {
+/* Estado section header */
+.results-estado-section .results-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-left: 16px;
+  border-left: 4px solid var(--vermelho);
+}
+.results-estado-section .results-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--branco);
+  letter-spacing: -0.015em;
+  margin: 0;
+  line-height: 1.3;
+}
+#results-estado-count {
+  font-size: 13px;
+  color: rgba(219, 234, 254, 0.70);
+  font-weight: 500;
+  padding: 4px 12px;
+  background: rgba(166, 25, 46, 0.20);
+  border: 1px solid rgba(166, 25, 46, 0.35);
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+#results-raio-message {
   display: flex;
   gap: 12px;
   padding: 16px 20px;
@@ -276,8 +313,8 @@ h1 {
   font-size: 14px;
   align-items: flex-start;
 }
-#results-message.hidden { display: none; }
-#results-message iconify-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+#results-raio-message.hidden { display: none; }
+#results-raio-message iconify-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
 
 .grid {
   display: grid;
@@ -288,32 +325,30 @@ h1 {
 
 /* CARD */
 .card {
-  background: rgba(255,255,255,0.05);
+  background: var(--branco);
   border-radius: 16px;
   padding: 24px;
-  border: 1px solid rgba(255,255,255,0.10);
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.10);
+  border: none;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  transition: box-shadow 0.3s, border-color 0.3s;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  transition: box-shadow 0.3s, transform 0.2s;
 }
 .card:hover {
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-  border-color: rgba(255,255,255,0.30);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.20);
+  transform: translateY(-2px);
 }
 .card-bg-icon {
   position: absolute;
   top: 0; right: 0;
   padding: 16px;
-  opacity: 0.10;
+  opacity: 0.06;
   transform: translateX(16px) translateY(-16px);
   pointer-events: none;
 }
-.card-bg-icon iconify-icon { font-size: 96px; color: rgba(255,255,255,0.05); }
+.card-bg-icon iconify-icon { font-size: 96px; color: var(--navy-1); }
 .card-top {
   display: flex;
   justify-content: space-between;
@@ -326,8 +361,8 @@ h1 {
 .card-info { min-width: 0; flex: 1; }
 .card-info h3 {
   font-size: 18px;
-  font-weight: 500;
-  color: var(--branco);
+  font-weight: 700;
+  color: var(--navy-1);
   margin-bottom: 4px;
   line-height: 1.3;
 }
@@ -335,7 +370,7 @@ h1 {
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: rgba(191,219,254,0.70);
+  color: #64748b;
   gap: 6px;
 }
 .card-badges {
@@ -350,20 +385,20 @@ h1 {
   align-items: center;
   gap: 4px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 4px 10px;
   border-radius: 6px;
   white-space: nowrap;
 }
 .badge-horario {
-  background: rgba(245,158,11,0.15);
-  color: #fde68a;
-  border: 1px solid rgba(245,158,11,0.30);
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
 }
 .badge-mp {
-  background: rgba(59,130,246,0.20);
-  color: #bfdbfe;
-  border: 1px solid rgba(59,130,246,0.30);
+  background: #e0edff;
+  color: var(--navy-1);
+  border: 1px solid #bfdbfe;
 }
 
 .card-body {
@@ -379,16 +414,20 @@ h1 {
   display: flex;
   gap: 12px;
   font-size: 14px;
-  color: rgba(219,234,254,0.90);
+  color: #334155;
 }
 .card-body .row.start { align-items: flex-start; }
 .card-body .row.center { align-items: center; }
 .card-body iconify-icon {
-  color: rgba(147,197,253,0.70);
+  color: var(--vermelho);
   font-size: 16px;
   flex-shrink: 0;
 }
 .card-body .row.start iconify-icon { margin-top: 2px; }
+.card-tel {
+  color: #334155;
+  font-weight: 500;
+}
 
 .card-actions {
   display: flex;
@@ -402,7 +441,7 @@ h1 {
   padding: 10px 16px;
   border-radius: 8px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
   border: 1px solid;
   cursor: pointer;
@@ -411,27 +450,145 @@ h1 {
   justify-content: center;
   gap: 8px;
   text-decoration: none;
-  transition: background 0.15s;
+  transition: background 0.15s, transform 0.05s;
 }
+.btn-action:active { transform: scale(0.98); }
 .btn-action iconify-icon { font-size: 18px; }
 .btn-wpp {
-  background: rgba(37,211,102,0.10);
-  border-color: rgba(37,211,102,0.30);
-  color: var(--whatsapp);
-}
-.btn-wpp:hover { background: rgba(37,211,102,0.20); }
-.btn-rotas {
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(255,255,255,0.20);
+  background: var(--whatsapp);
+  border-color: var(--whatsapp);
   color: var(--branco);
 }
-.btn-rotas:hover { background: rgba(255,255,255,0.20); }
+.btn-wpp:hover { background: var(--whatsapp-hover); border-color: var(--whatsapp-hover); }
+.btn-rotas {
+  background: var(--branco);
+  border-color: #cbd5e1;
+  color: var(--navy-1);
+}
+.btn-rotas:hover { background: #f1f5f9; border-color: var(--navy-1); }
 
 /* Central de pós-vendas (chamada de socorro) */
+.results-section + .results-estado-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.results-estado-section .cards-lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .results-estado-section .cards-lista { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 1024px) {
+  .results-estado-section .cards-lista { grid-template-columns: 1fr 1fr 1fr; }
+}
+.results-estado-section .uf-bloco { margin-bottom: 24px; }
+.results-estado-section .uf-titulo {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(219,234,254,0.90);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.results-estado-section .card-mini {
+  background: var(--branco);
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.results-estado-section .card-mini:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  transform: translateY(-1px);
+}
+.results-estado-section .card-mini-nome {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy-1);
+  line-height: 1.4;
+  flex: 1;
+}
+.results-estado-section .card-mini-local {
+  font-size: 13px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.results-estado-section .card-mini-local iconify-icon {
+  font-size: 13px;
+  color: var(--vermelho);
+}
+.card-mini-tel {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 500;
+}
+.results-estado-section .card-mini-acoes {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.results-estado-section .btn-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.results-estado-section .btn-mini iconify-icon { font-size: 13px; }
+.results-estado-section .btn-mini-wpp {
+  background: var(--whatsapp);
+  border-color: var(--whatsapp);
+  color: var(--branco);
+}
+.results-estado-section .btn-mini-wpp:hover {
+  background: var(--whatsapp-hover);
+  border-color: var(--whatsapp-hover);
+}
+.results-estado-section .btn-mini-rotas {
+  background: var(--branco);
+  border-color: #cbd5e1;
+  color: var(--navy-1);
+}
+.results-estado-section .btn-mini-rotas:hover {
+  background: #f1f5f9;
+  border-color: var(--navy-1);
+}
+.results-estado-section .badge-mini-mp {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #e0edff;
+  color: var(--navy-1);
+  border: 1px solid #bfdbfe;
+  white-space: nowrap;
+}
+
 .central-cta {
   width: 100%;
   max-width: 640px;
-  margin: 32px auto 0;
+  margin: 48px auto 0;
   padding: 24px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.10);
@@ -678,6 +835,11 @@ footer {
   font-size: 13px;
   color: #8B92A7;
 }
+.card-mini-tel-light {
+  color: #4A5168;
+  font-size: 13px;
+  font-weight: 500;
+}
 .card-mini-acoes {
   display: flex;
   gap: 6px;
@@ -781,16 +943,31 @@ footer {
   </div>
 
   <div class="results-area hidden" id="results-area">
-    <div class="results-header">
-      <h2 id="results-title">Autorizadas em até 20 km</h2>
-      <span id="results-count"></span>
+
+    <!-- Seção 1: Raio de 20 km -->
+    <div class="results-section" id="results-raio-section">
+      <div class="results-header">
+        <h2 id="results-raio-title"></h2>
+        <span id="results-raio-count"></span>
+      </div>
+      <div id="results-raio-message" class="hidden">
+        <iconify-icon icon="lucide:map-pin-off" stroke-width="1.5"></iconify-icon>
+        <div id="results-raio-message-text"></div>
+      </div>
+      <div class="grid" id="results-raio-grid"></div>
     </div>
-    <div id="results-message" class="hidden">
-      <iconify-icon icon="lucide:map-pin-off" stroke-width="1.5"></iconify-icon>
-      <div id="results-message-text"></div>
+
+    <!-- Seção 2: Mesmo estado -->
+    <div class="results-section results-estado-section" id="results-estado-section">
+      <div class="results-header">
+        <h2 id="results-estado-title"></h2>
+        <span id="results-estado-count"></span>
+      </div>
+      <div id="results-estado-conteudo"></div>
     </div>
-    <div class="grid" id="results-grid"></div>
+
     <div id="central-cta-area"></div>
+
   </div>
 
   <!-- Botão Ver Todas + área expansível -->
@@ -912,96 +1089,223 @@ function htmlCentralCta() {
 
 // ============================================================
 // GEOCODIFICACAO (no navegador)
+// Prioridade: BrasilAPI v2 (coordenadas) → BrasilAPI v1 (fontes alternativas) → ViaCEP → Nominatim (coordenadas da cidade)
 // ============================================================
+
+// Cache de coordenadas por cidade (compartilhado entre cliente e autorizadas)
+const cacheCidadeGeo = {};
+const pendingCidadeGeo = {};
+
+async function geocodificaCidadeFallback(cidade, uf) {
+    if (!cidade || !uf) return null;
+    const key = normCidade(cidade) + '|' + uf.toUpperCase();
+    if (cacheCidadeGeo[key] !== undefined) return cacheCidadeGeo[key];
+    if (pendingCidadeGeo[key]) return pendingCidadeGeo[key];
+
+    pendingCidadeGeo[key] = (async () => {
+        try {
+            const query = encodeURIComponent(`${cidade}, ${uf}, Brazil`);
+            const r = await fetch(
+                `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1&countrycodes=br`,
+                { headers: { 'Accept': 'application/json' } }
+            );
+            if (r.ok) {
+                const data = await r.json();
+                if (data.length > 0) {
+                    const result = { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+                    cacheCidadeGeo[key] = result;
+                    return result;
+                }
+            }
+        } catch (e) {}
+        cacheCidadeGeo[key] = null;
+        return null;
+    })();
+
+    const result = await pendingCidadeGeo[key];
+    delete pendingCidadeGeo[key];
+    return result;
+}
+
 const cacheCepCliente = {};
 async function geocodificaCepCliente(cep) {
     if (cacheCepCliente[cep]) return cacheCepCliente[cep];
-    try {
+
+    let cidade = null, uf = null, lat = null, lng = null;
+
+    // Helper: fetch com timeout
+    async function fetchComTimeout(url, ms = TIMEOUT_CEP_MS) {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_CEP_MS);
-        const r = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`, { signal: controller.signal });
-        clearTimeout(timeoutId);
+        const timeoutId = setTimeout(() => controller.abort(), ms);
+        try {
+            const r = await fetch(url, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            return r;
+        } catch (e) {
+            clearTimeout(timeoutId);
+            throw e;
+        }
+    }
+
+    // 1. BrasilAPI v2 — melhor caso: coordenadas exatas do CEP
+    try {
+        const r = await fetchComTimeout(`https://brasilapi.com.br/api/cep/v2/${cep}`);
         if (r.ok) {
             const data = await r.json();
+            cidade = data.city || null;
+            uf = data.state || null;
             const coords = data.location?.coordinates;
             if (coords?.latitude && coords?.longitude) {
-                const result = {
-                    lat: parseFloat(coords.latitude),
-                    lng: parseFloat(coords.longitude),
-                    cidade: data.city, uf: data.state
-                };
-                cacheCepCliente[cep] = result;
-                return result;
+                lat = parseFloat(coords.latitude);
+                lng = parseFloat(coords.longitude);
             }
-            if (data.city) {
-                const result = { lat: null, lng: null, cidade: data.city, uf: data.state };
-                cacheCepCliente[cep] = result;
-                return result;
-            }
+            console.log(`[CEP] v2 OK: ${cep} → ${cidade}/${uf} (coords: ${lat != null})`);
+        } else {
+            console.log(`[CEP] v2 falhou para ${cep}: HTTP ${r.status}`);
         }
-    } catch (e) {}
-    try {
-        const r2 = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        if (r2.ok) {
-            const data = await r2.json();
-            if (!data.erro) {
-                const result = { lat: null, lng: null, cidade: data.localidade, uf: data.uf };
-                cacheCepCliente[cep] = result;
-                return result;
+    } catch (e) {
+        console.log(`[CEP] v2 erro para ${cep}:`, e.message);
+    }
+
+    // 2. BrasilAPI v1 — fontes diferentes, resolve CEPs que o v2 não tem
+    if (!cidade) {
+        try {
+            const r = await fetchComTimeout(`https://brasilapi.com.br/api/cep/v1/${cep}`);
+            if (r.ok) {
+                const data = await r.json();
+                if (data.city) {
+                    cidade = data.city;
+                    uf = data.state || null;
+                    console.log(`[CEP] v1 OK: ${cep} → ${cidade}/${uf}`);
+                }
+            } else {
+                console.log(`[CEP] v1 falhou para ${cep}: HTTP ${r.status}`);
             }
+        } catch (e) {
+            console.log(`[CEP] v1 erro para ${cep}:`, e.message);
         }
-    } catch (e) {}
-    return null;
+    }
+
+    // 3. ViaCEP — fallback final para cidade/uf
+    if (!cidade) {
+        try {
+            const r2 = await fetchComTimeout(`https://viacep.com.br/ws/${cep}/json/`);
+            if (r2.ok) {
+                const data = await r2.json();
+                if (!data.erro) {
+                    cidade = data.localidade || null;
+                    uf = data.uf || null;
+                    console.log(`[CEP] ViaCEP OK: ${cep} → ${cidade}/${uf}`);
+                } else {
+                    console.log(`[CEP] ViaCEP retornou erro para ${cep}`);
+                }
+            } else {
+                console.log(`[CEP] ViaCEP falhou para ${cep}: HTTP ${r2.status}`);
+            }
+        } catch (e) {
+            console.log(`[CEP] ViaCEP erro para ${cep}:`, e.message);
+        }
+    }
+
+    if (!cidade) {
+        console.warn(`[CEP] Nenhuma API resolveu o CEP ${cep}`);
+        return null;
+    }
+
+    // 4. Nominatim — fallback: coordenadas do centro da cidade
+    if (lat == null && cidade && uf) {
+        const geo = await geocodificaCidadeFallback(cidade, uf);
+        if (geo) { lat = geo.lat; lng = geo.lng; }
+        console.log(`[CEP] Nominatim para ${cidade}/${uf}: coords ${lat != null}`);
+    }
+
+    const result = { lat, lng, cidade, uf };
+    cacheCepCliente[cep] = result;
+    return result;
 }
 
 const cacheCidadeAutorizada = {};
 async function enriqueceCidadeViaCep(cep) {
     if (cacheCidadeAutorizada[cep]) return cacheCidadeAutorizada[cep];
+
+    let cidade = null, uf = null, lat = null, lng = null;
+
+    // 1. BrasilAPI v2
     try {
         const r = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
         if (r.ok) {
             const data = await r.json();
-            const result = {
-                cidade: data.city || null,
-                uf: data.state || null,
-                lat: data.location?.coordinates?.latitude ? parseFloat(data.location.coordinates.latitude) : null,
-                lng: data.location?.coordinates?.longitude ? parseFloat(data.location.coordinates.longitude) : null,
-            };
-            cacheCidadeAutorizada[cep] = result;
-            return result;
+            cidade = data.city || null;
+            uf = data.state || null;
+            lat = data.location?.coordinates?.latitude ? parseFloat(data.location.coordinates.latitude) : null;
+            lng = data.location?.coordinates?.longitude ? parseFloat(data.location.coordinates.longitude) : null;
         }
     } catch (e) {}
-    try {
-        const r2 = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        if (r2.ok) {
-            const data = await r2.json();
-            if (!data.erro) {
-                const result = { cidade: data.localidade || null, uf: data.uf || null, lat: null, lng: null };
-                cacheCidadeAutorizada[cep] = result;
-                return result;
+
+    // 2. BrasilAPI v1
+    if (!cidade) {
+        try {
+            const r = await fetch(`https://brasilapi.com.br/api/cep/v1/${cep}`);
+            if (r.ok) {
+                const data = await r.json();
+                if (data.city) {
+                    cidade = data.city;
+                    uf = data.state || null;
+                }
             }
-        }
-    } catch (e) {}
-    cacheCidadeAutorizada[cep] = { cidade: null, uf: null, lat: null, lng: null };
-    return cacheCidadeAutorizada[cep];
+        } catch (e) {}
+    }
+
+    // 3. ViaCEP — fallback cidade/uf
+    if (!cidade) {
+        try {
+            const r2 = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            if (r2.ok) {
+                const data = await r2.json();
+                if (!data.erro) {
+                    cidade = data.localidade || null;
+                    uf = data.uf || null;
+                }
+            }
+        } catch (e) {}
+    }
+
+    const result = { cidade, uf, lat, lng };
+    cacheCidadeAutorizada[cep] = result;
+    return result;
 }
 
 // ============================================================
 // RENDERIZACAO
 // ============================================================
+function formataNumeroExibicao(num) {
+    if (!num) return '';
+    const limpo = num.replace(/\D/g, '').replace(/^55/, '');
+    if (limpo.length === 11) return `(${limpo.slice(0,2)}) ${limpo.slice(2,7)}-${limpo.slice(7)}`;
+    if (limpo.length === 10) return `(${limpo.slice(0,2)}) ${limpo.slice(2,6)}-${limpo.slice(6)}`;
+    return num;
+}
+
+function tituloCase(str) {
+    if (!str) return '';
+    return str.toLowerCase().replace(/(?:^|\s|-)\S/g, c => c.toUpperCase());
+}
+
 function montaCardHTML(item, distancia) {
     const e = item.endereco;
     const c = item.contato;
-    const cidadeFinal = e.cidade || '';
-    const partes = [e.rua, e.numero].filter(Boolean).join(', ');
-    const linha2 = [cidadeFinal, e.uf].filter(Boolean).join(' - ') + (e.cep ? ', ' + formataCepExibicao(e.cep) : '');
+    const cidadeFinal = tituloCase(e.cidade) || '';
+    const partes = [tituloCase(e.rua), e.numero].filter(Boolean).join(', ');
+    const linha2 = [cidadeFinal, e.uf.toUpperCase()].filter(Boolean).join(' - ') + (e.cep ? ', ' + formataCepExibicao(e.cep) : '');
     const enderecoCompleto = encodeURIComponent(
         [partes, e.bairro, cidadeFinal, e.uf, 'CEP ' + formataCepExibicao(e.cep)].filter(Boolean).join(', ')
     );
     const urlMaps = `https://www.google.com/maps/search/?api=1&query=${enderecoCompleto}`;
-    const msgWpp = encodeURIComponent(`Olá, ${item.nome_fantasia}! Encontrei o contato pelo site da Dellamed e preciso de assistência técnica.`);
+    const msgWpp = encodeURIComponent(`Olá, ${tituloCase(item.nome_fantasia)}! Encontrei o contato pelo site da Dellamed e preciso de assistência técnica.`);
     const urlWpp = c.whatsapp ? `https://wa.me/${c.whatsapp}?text=${msgWpp}` : '#';
-    const telFormatado = c.telefone_exibicao || c.celular_exibicao || '';
+
+    const comercialDisplay = c.comercial || '';
+    const celularDisplay = c.whatsapp ? formataNumeroExibicao(c.whatsapp) : '';
 
     const badgeHorario = '';
     const badgeMp = item.atende_monitores_pressao
@@ -1017,7 +1321,7 @@ function montaCardHTML(item, distancia) {
       <div class="card-bg-icon"><iconify-icon icon="lucide:settings" stroke-width="1"></iconify-icon></div>
       <div class="card-top">
         <div class="card-info">
-          <h3>${item.nome_fantasia}</h3>
+          <h3>${tituloCase(item.nome_fantasia)}</h3>
           ${distHtml}
         </div>
         <div class="card-badges">
@@ -1030,10 +1334,15 @@ function montaCardHTML(item, distancia) {
           <iconify-icon icon="lucide:map-pin" stroke-width="1.5"></iconify-icon>
           <span>${partes}${e.bairro ? ' - ' + e.bairro : ''}<br>${linha2}</span>
         </div>
-        ${telFormatado ? `
+        ${comercialDisplay ? `
         <div class="row center">
           <iconify-icon icon="lucide:phone" stroke-width="1.5"></iconify-icon>
-          <span>${telFormatado}</span>
+          <span class="card-tel">${comercialDisplay}</span>
+        </div>` : ''}
+        ${celularDisplay ? `
+        <div class="row center">
+          <iconify-icon icon="lucide:smartphone" stroke-width="1.5"></iconify-icon>
+          <span class="card-tel">${celularDisplay}</span>
         </div>` : ''}
       </div>
       <div class="card-actions">
@@ -1050,24 +1359,122 @@ function montaCardHTML(item, distancia) {
     </div>`;
 }
 
-function exibeResultados(html, titulo, contagem, mensagem, mostrarCentral) {
+function formataEndereco(endereco) {
+    const cidadeFinal = tituloCase(endereco.cidade) || '';
+    const localBase = [tituloCase(endereco.bairro), cidadeFinal].filter(Boolean).join(', ');
+    return endereco.uf ? (localBase ? `${localBase} - ${endereco.uf.toUpperCase()}` : endereco.uf.toUpperCase()) : localBase;
+}
+
+function montaCardMiniEstadoHTML(item) {
+    const e = item.endereco;
+    const c = item.contato;
+    const local = formataEndereco(e);
+
+    const enderecoCompleto = encodeURIComponent(
+        [e.rua, e.numero, e.bairro, e.cidade, e.uf, 'CEP ' + formataCepExibicao(e.cep)].filter(Boolean).join(', ')
+    );
+    const urlMaps = `https://www.google.com/maps/search/?api=1&query=${enderecoCompleto}`;
+    const msgWpp = encodeURIComponent(`Olá, ${tituloCase(item.nome_fantasia)}! Encontrei o contato pelo site da Dellamed e preciso de assistência técnica.`);
+    const urlWpp = c.whatsapp ? `https://wa.me/${c.whatsapp}?text=${msgWpp}` : '';
+
+    const comercialDisplay = c.comercial || '';
+    const celularDisplay = c.whatsapp ? formataNumeroExibicao(c.whatsapp) : '';
+
+    const badgeMp = item.atende_monitores_pressao
+        ? `<span class="badge-mini-mp">Monitor de pressão</span>` : '';
+
+    return `
+    <div class="card-mini">
+      <div class="card-mini-top">
+        <div class="card-mini-nome">${tituloCase(item.nome_fantasia)}</div>
+        ${badgeMp}
+      </div>
+      <div class="card-mini-local">
+        <iconify-icon icon="lucide:map-pin" stroke-width="1.5"></iconify-icon>
+        <span>${local || 'Endereço disponível ao contatar'}</span>
+      </div>
+      ${comercialDisplay ? `
+      <div class="card-mini-local">
+        <iconify-icon icon="lucide:phone" stroke-width="1.5"></iconify-icon>
+        <span class="card-mini-tel">${comercialDisplay}</span>
+      </div>` : ''}
+      ${celularDisplay ? `
+      <div class="card-mini-local">
+        <iconify-icon icon="lucide:smartphone" stroke-width="1.5"></iconify-icon>
+        <span class="card-mini-tel">${celularDisplay}</span>
+      </div>` : ''}
+      <div class="card-mini-acoes">
+        ${urlWpp ? `<a class="btn-mini btn-mini-wpp" href="${urlWpp}" target="_blank" rel="noopener">
+          <iconify-icon icon="lucide:message-circle" stroke-width="1.5"></iconify-icon>WhatsApp
+        </a>` : ''}
+        <a class="btn-mini btn-mini-rotas" href="${urlMaps}" target="_blank" rel="noopener">
+          <iconify-icon icon="lucide:map" stroke-width="1.5"></iconify-icon>Como chegar
+        </a>
+      </div>
+    </div>`;
+}
+
+function renderizaEstadoSection(itensEstado, ufCliente) {
+    const nomeEstado = UF_NOMES_COMPLETOS[ufCliente] || ufCliente;
+    const porCidade = {};
+    for (const item of itensEstado) {
+        const cidade = item.endereco.cidade || 'Cidade não informada';
+        if (!porCidade[cidade]) porCidade[cidade] = [];
+        porCidade[cidade].push(item);
+    }
+    const cidadesOrdenadas = Object.keys(porCidade).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    return cidadesOrdenadas.map(cidade => {
+        const itens = porCidade[cidade];
+        return `
+          <div class="uf-bloco">
+            <h3 class="uf-titulo">
+              <iconify-icon icon="lucide:map-pin" stroke-width="1.5" style="font-size:14px; color:rgba(147,197,253,0.70);"></iconify-icon>
+              ${cidade}
+              <span style="font-size:12px; color:rgba(191,219,254,0.50); font-weight:500; margin-left:auto;">${itens.length}</span>
+            </h3>
+            <div class="cards-lista">
+              ${itens.map(montaCardMiniEstadoHTML).join('')}
+            </div>
+          </div>`;
+    }).join('');
+}
+
+function exibeResultados(raioHtml, raioTitulo, raioContagem, raioMensagem, estadoHtml, estadoTitulo, estadoContagem, mostrarCentral) {
     const area = document.getElementById('results-area');
-    document.getElementById('results-grid').innerHTML = html;
-    document.getElementById('results-title').textContent = titulo;
-    document.getElementById('results-count').textContent = contagem;
-    const msgBox = document.getElementById('results-message');
-    if (mensagem) {
-        document.getElementById('results-message-text').innerHTML = mensagem;
+
+    // Seção raio
+    document.getElementById('results-raio-grid').innerHTML = raioHtml;
+    document.getElementById('results-raio-title').textContent = raioTitulo;
+    document.getElementById('results-raio-count').textContent = raioContagem;
+    const msgBox = document.getElementById('results-raio-message');
+    if (raioMensagem) {
+        document.getElementById('results-raio-message-text').innerHTML = raioMensagem;
         msgBox.classList.remove('hidden');
     } else {
         msgBox.classList.add('hidden');
     }
+
+    // CTA central
     document.getElementById('central-cta-area').innerHTML = mostrarCentral ? htmlCentralCta() : '';
+
+    // Seção estado
+    document.getElementById('results-estado-conteudo').innerHTML = estadoHtml;
+    document.getElementById('results-estado-title').textContent = estadoTitulo;
+    document.getElementById('results-estado-count').textContent = estadoContagem;
+
+    // Se não tem nada no estado, oculta a seção
+    const estadoSection = document.getElementById('results-estado-section');
+    estadoSection.style.display = estadoHtml ? '' : 'none';
+
     area.classList.remove('hidden');
     void area.offsetWidth;
     area.classList.add('show');
-    const y = area.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    if (raioHtml) {
+        const header = document.querySelector('header');
+        const headerHeight = header.offsetHeight;
+        const y = area.getBoundingClientRect().top + window.scrollY - headerHeight - 40;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+    }
 }
 
 // ============================================================
@@ -1129,16 +1536,18 @@ async function executaBuscaPorCep(cep) {
 
     const cidadeCliente = geoCliente.cidade;
     const ufCliente = geoCliente.uf;
+    const nomeEstado = UF_NOMES_COMPLETOS[ufCliente] || ufCliente;
     hint.textContent = `Buscando em ${cidadeCliente} - ${ufCliente}...`;
 
     let lista = dados.slice();
     if (filtroMp) lista = lista.filter(d => d.atende_monitores_pressao);
 
-    const candidatosEstado = lista.filter(d => d.endereco.uf === ufCliente);
+    const candidatosEstado = lista.filter(d => d.endereco.uf && d.endereco.uf.toUpperCase() === ufCliente.toUpperCase());
 
     btn.innerHTML = '<span class="spin"><iconify-icon icon="lucide:loader-2"></iconify-icon></span> Comparando autorizadas...';
-    hint.textContent = `Comparando ${candidatosEstado.length} autorizada(s) em ${ufCliente}...`;
+    hint.textContent = `Comparando ${candidatosEstado.length} autorizada(s) em ${nomeEstado}...`;
 
+    // Enriquece coordenadas de todas as autorizadas do estado
     const enriquecidas = [];
     const LOTE = 8;
     for (let i = 0; i < candidatosEstado.length; i += LOTE) {
@@ -1158,90 +1567,106 @@ async function executaBuscaPorCep(cep) {
         enriquecidas.push(...resultados);
     }
 
-    // 1ª PASSADA: mesma cidade
-    const mesmaCidade = enriquecidas.filter(x => normCidade(x.cidade) === normCidade(cidadeCliente));
+    // Atualiza cidade nos dados originais para uso futuro
+    for (const e of enriquecidas) {
+        if (e.cidade && !e.item.endereco.cidade) e.item.endereco.cidade = e.cidade;
+    }
 
     btn.disabled = false;
     btn.innerHTML = original;
 
-    if (mesmaCidade.length > 0) {
-        const comDist = mesmaCidade.map(x => {
-            let dist = null;
-            if (geoCliente.lat != null && x.lat != null) {
-                dist = distanciaKm(geoCliente.lat, geoCliente.lng, x.lat, x.lng);
-            }
-            return { item: x.item, dist };
-        }).sort((a, b) => {
-            if (a.dist != null && b.dist != null) return a.dist - b.dist;
-            if (a.dist != null) return -1;
-            if (b.dist != null) return 1;
-            return 0;
-        });
-        const html = comDist.map(x => montaCardHTML(x.item, x.dist)).join('');
-        const filtroTxt = filtroMp ? ' que atendem monitor de pressão' : '';
-        hint.textContent = `${mesmaCidade.length} autorizada(s) em ${cidadeCliente}.`;
-        registraBusca({
-            cep, cidade: cidadeCliente, estado: ufCliente,
-            resultado: 'encontrou_cidade',
-            filtro_mp: filtroMp,
-            distancia_mais_proxima_km: comDist[0]?.dist != null ? comDist[0].dist.toFixed(2) : ''
-        });
-        exibeResultados(html, `Autorizadas em ${cidadeCliente}`,
-            `${mesmaCidade.length} resultado${mesmaCidade.length>1?'s':''}${filtroTxt}`, null, false);
-        return;
-    }
+    const filtroTxt = filtroMp ? ' que atendem monitor de pressão' : '';
 
-    // 2ª PASSADA: raio 20km
+    // ── SEÇÃO 1: Raio de 20 km ──
+    // Estratégia: mesma cidade = dentro do raio (garantido).
+    // Se houver coordenadas, também inclui cidades vizinhas dentro de 20 km.
+    let raioHtml = '';
+    let raioTitulo = '';
+    let raioContagem = '';
+    let raioMensagem = null;
+    let mostrarCentral = false;
+    let resultadoCaptura = 'sem_resultado';
+    let distMaisProxima = '';
+
+    // 1. Mesma cidade (sempre inclui, com ou sem coordenadas)
+    const mesmaCidade = enriquecidas.filter(x => normCidade(x.cidade) === normCidade(cidadeCliente));
+    const mesmaCidadeComDist = mesmaCidade.map(x => {
+        let dist = null;
+        if (geoCliente.lat != null && x.lat != null) {
+            dist = distanciaKm(geoCliente.lat, geoCliente.lng, x.lat, x.lng);
+        }
+        return { item: x.item, dist };
+    });
+
+    // 2. Cidades vizinhas dentro do raio (só se tiver coordenadas)
+    const idsMesmaCidade = new Set(mesmaCidade.map(x => x.item.endereco.cep));
+    let vizinhosNoRaio = [];
     if (geoCliente.lat != null) {
-        const comDist = enriquecidas
-            .filter(x => x.lat != null)
-            .map(x => ({ item: x.item, cidade: x.cidade, dist: distanciaKm(geoCliente.lat, geoCliente.lng, x.lat, x.lng) }))
-            .sort((a, b) => a.dist - b.dist);
-        const dentroRaio = comDist.filter(x => x.dist <= RAIO_KM);
-        if (dentroRaio.length > 0) {
-            const html = dentroRaio.map(x => montaCardHTML(x.item, x.dist)).join('');
-            const filtroTxt = filtroMp ? ' que atendem monitor de pressão' : '';
-            hint.textContent = `${dentroRaio.length} autorizada(s) em até ${RAIO_KM} km de ${cidadeCliente}.`;
-            registraBusca({
-                cep, cidade: cidadeCliente, estado: ufCliente,
-                resultado: 'encontrou_raio',
-                filtro_mp: filtroMp,
-                distancia_mais_proxima_km: dentroRaio[0].dist.toFixed(2)
-            });
-            exibeResultados(html, `Autorizadas próximas de ${cidadeCliente}`,
-                `${dentroRaio.length} em até ${RAIO_KM} km${filtroTxt}`,
-                `Não há autorizada na cidade de ${cidadeCliente}, mas encontramos opções em até ${RAIO_KM} km.`, false);
-            return;
-        }
-        if (comDist.length > 0) {
-            const maisProxima = comDist[0];
-            const html = montaCardHTML(maisProxima.item, maisProxima.dist);
-            const filtroTxt = filtroMp ? ' que atende monitor de pressão' : '';
-            hint.textContent = `Mais próxima a ${formataDistancia(maisProxima.dist)} de você.`;
-            registraBusca({
-                cep, cidade: cidadeCliente, estado: ufCliente,
-                resultado: 'fora_raio',
-                filtro_mp: filtroMp,
-                distancia_mais_proxima_km: maisProxima.dist.toFixed(2)
-            });
-            exibeResultados(html, 'Mais próxima de você',
-                `Fora do raio de ${RAIO_KM} km`,
-                `Não há autorizada${filtroTxt} em ${cidadeCliente} nem em até ${RAIO_KM} km. A mais próxima fica em <strong>${maisProxima.cidade || maisProxima.item.endereco.uf}</strong>, a <strong>${formataDistancia(maisProxima.dist)}</strong>.`, true);
-            return;
-        }
+        vizinhosNoRaio = enriquecidas
+            .filter(x => x.lat != null && !idsMesmaCidade.has(x.item.endereco.cep))
+            .map(x => ({ item: x.item, dist: distanciaKm(geoCliente.lat, geoCliente.lng, x.lat, x.lng) }))
+            .filter(x => x.dist <= RAIO_KM);
     }
 
-    // 3ª PASSADA: sem autorizadas próximas
+    // 3. Junta e ordena
+    const todosNoRaio = [...mesmaCidadeComDist, ...vizinhosNoRaio].sort((a, b) => {
+        if (a.dist != null && b.dist != null) return a.dist - b.dist;
+        if (a.dist != null) return -1;
+        if (b.dist != null) return 1;
+        return 0;
+    });
+
+    if (todosNoRaio.length > 0) {
+        raioHtml = todosNoRaio.map(x => montaCardHTML(x.item, x.dist)).join('');
+        raioTitulo = `Autorizadas próximas de você`;
+        raioContagem = `${todosNoRaio.length} resultado${todosNoRaio.length > 1 ? 's' : ''} em ${cidadeCliente} e região${filtroTxt}`;
+        resultadoCaptura = mesmaCidade.length > 0 ? 'encontrou_cidade' : 'encontrou_raio';
+        distMaisProxima = todosNoRaio[0].dist != null ? todosNoRaio[0].dist.toFixed(2) : '';
+    } else {
+        raioTitulo = `Autorizadas em um raio de ${RAIO_KM} km`;
+        raioContagem = '';
+        raioMensagem = `Não encontramos autorizadas${filtroTxt} em <strong>${cidadeCliente}</strong> nem em um raio de ${RAIO_KM} km. Confira abaixo as opções disponíveis no seu estado.`;
+        mostrarCentral = true;
+        resultadoCaptura = candidatosEstado.length > 0 ? 'fora_raio' : 'sem_resultado';
+    }
+
+    hint.textContent = todosNoRaio.length > 0
+        ? `Resultados para ${cidadeCliente} - ${ufCliente}`
+        : `Resultados em ${nomeEstado}`;
+
+    // ── SEÇÃO 2: Mesmo estado ──
+    let estadoHtml = '';
+    let estadoTitulo = '';
+    let estadoContagem = '';
+
+    if (candidatosEstado.length > 0) {
+        estadoTitulo = `Todas as autorizadas em ${nomeEstado}`;
+        estadoContagem = `${candidatosEstado.length} autorizada${candidatosEstado.length > 1 ? 's' : ''}${filtroTxt}`;
+        estadoHtml = renderizaEstadoSection(candidatosEstado, ufCliente);
+    }
+
+    // Se não tem nada no raio NEM no estado
+    if (!raioHtml && candidatosEstado.length === 0) {
+        mostrarCentral = true;
+        raioTitulo = 'Sem autorizadas na sua região';
+        raioMensagem = `Poxa, que pena... Ainda não temos uma assistência autorizada em ${nomeEstado}, mas seguimos expandindo nossa rede para oferecer um atendimento cada vez melhor.<br><br>Entre em contato com a nossa equipe que vamos te orientar da melhor forma possível.`;
+        hint.textContent = `Nenhuma autorizada encontrada em ${nomeEstado}.`;
+    }
+
     registraBusca({
         cep, cidade: cidadeCliente, estado: ufCliente,
-        resultado: 'sem_resultado',
+        resultado: resultadoCaptura,
         filtro_mp: filtroMp,
-        distancia_mais_proxima_km: ''
+        distancia_mais_proxima_km: distMaisProxima
     });
-    exibeResultados('', 'Sem autorizadas próximas', '',
-        `Poxa, que pena... Ainda não temos uma assistência autorizada na sua região, mas seguimos expandindo nossa rede para oferecer um atendimento cada vez melhor.<br><br>Entre em contato com a nossa equipe que vamos te orientar da melhor forma possível.`,
-        true);
+
+    exibeResultados(
+        raioHtml, raioTitulo, raioContagem, raioMensagem,
+        estadoHtml, estadoTitulo, estadoContagem,
+        mostrarCentral
+    );
 }
+
 
 // ============================================================
 // VER TODAS — agrupamento por estado (ordem alfabética)
@@ -1259,16 +1684,17 @@ const UF_NOMES_COMPLETOS = {
 function montaCardMiniHTML(item) {
     const e = item.endereco;
     const c = item.contato;
-    const cidadeFinal = e.cidade || '';
-    const localBase = [e.bairro, cidadeFinal].filter(Boolean).join(', ');
-    const local = e.uf ? (localBase ? `${localBase} - ${e.uf}` : e.uf) : localBase;
+    const local = formataEndereco(e);
 
     const enderecoCompleto = encodeURIComponent(
-        [e.rua, e.numero, e.bairro, cidadeFinal, e.uf, 'CEP ' + formataCepExibicao(e.cep)].filter(Boolean).join(', ')
+        [e.rua, e.numero, e.bairro, e.cidade, e.uf, 'CEP ' + formataCepExibicao(e.cep)].filter(Boolean).join(', ')
     );
     const urlMaps = `https://www.google.com/maps/search/?api=1&query=${enderecoCompleto}`;
-    const msgWpp = encodeURIComponent(`Olá, ${item.nome_fantasia}! Encontrei o contato pelo site da Dellamed e preciso de assistência técnica.`);
+    const msgWpp = encodeURIComponent(`Olá, ${tituloCase(item.nome_fantasia)}! Encontrei o contato pelo site da Dellamed e preciso de assistência técnica.`);
     const urlWpp = c.whatsapp ? `https://wa.me/${c.whatsapp}?text=${msgWpp}` : '';
+
+    const comercialDisplay = c.comercial || '';
+    const celularDisplay = c.whatsapp ? formataNumeroExibicao(c.whatsapp) : '';
 
     const badgeMp = item.atende_monitores_pressao
         ? `<span class="badge-mini-mp">Monitor de pressão</span>` : '';
@@ -1276,13 +1702,23 @@ function montaCardMiniHTML(item) {
     return `
     <div class="card-mini">
       <div class="card-mini-top">
-        <div class="card-mini-nome">${item.nome_fantasia}</div>
+        <div class="card-mini-nome">${tituloCase(item.nome_fantasia)}</div>
         ${badgeMp}
       </div>
       <div class="card-mini-local">
         <iconify-icon icon="lucide:map-pin" stroke-width="1.5"></iconify-icon>
         <span>${local || 'Endereço disponível ao contatar'}</span>
       </div>
+      ${comercialDisplay ? `
+      <div class="card-mini-local">
+        <iconify-icon icon="lucide:phone" stroke-width="1.5"></iconify-icon>
+        <span class="card-mini-tel-light">${comercialDisplay}</span>
+      </div>` : ''}
+      ${celularDisplay ? `
+      <div class="card-mini-local">
+        <iconify-icon icon="lucide:smartphone" stroke-width="1.5"></iconify-icon>
+        <span class="card-mini-tel-light">${celularDisplay}</span>
+      </div>` : ''}
       <div class="card-mini-acoes">
         ${urlWpp ? `<a class="btn-mini btn-mini-wpp" href="${urlWpp}" target="_blank" rel="noopener">
           <iconify-icon icon="lucide:message-circle" stroke-width="1.5"></iconify-icon>WhatsApp
@@ -1358,7 +1794,9 @@ function toggleVerTodas() {
         btn.classList.add('aberto');
         btn.setAttribute('aria-expanded', 'true');
         label.textContent = 'Recolher lista';
-        const y = area.getBoundingClientRect().top + window.scrollY - 80;
+        const header = document.querySelector('header');
+        const headerHeight = header.offsetHeight;
+        const y = area.getBoundingClientRect().top + window.scrollY - headerHeight - 40;
         window.scrollTo({ top: y, behavior: 'smooth' });
     }
 }
