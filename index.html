@@ -2920,6 +2920,14 @@ function htmlCentralCta() {
 // Cache de coordenadas por cidade (compartilhado entre cliente e autorizadas)
 const cacheCidadeGeo = {};
 const pendingCidadeGeo = {};
+let ultimaNominatim = 0;
+
+async function aguardaRateLimit() {
+    const agora = Date.now();
+    const espera = Math.max(0, 1100 - (agora - ultimaNominatim));
+    if (espera > 0) await new Promise(r => setTimeout(r, espera));
+    ultimaNominatim = Date.now();
+}
 
 async function geocodificaCidadeFallback(cidade, uf) {
     if (!cidade || !uf) return null;
@@ -2928,6 +2936,7 @@ async function geocodificaCidadeFallback(cidade, uf) {
     if (pendingCidadeGeo[key]) return pendingCidadeGeo[key];
 
     pendingCidadeGeo[key] = (async () => {
+        await aguardaRateLimit();
         try {
             const query = encodeURIComponent(`${cidade}, ${uf}, Brazil`);
             const r = await fetch(
