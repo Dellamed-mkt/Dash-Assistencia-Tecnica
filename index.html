@@ -3339,11 +3339,6 @@ function montaCardHTML(item, distancia) {
     const badgeHorario = '';
     const badgeMp = item.atende_monitores_pressao
         ? `<span class="badge badge-mp">Atende monitor de pressão</span>` : '';
-    const distHtml = distancia != null
-        ? `<div class="dist">
-             <iconify-icon icon="lucide:navigation" stroke-width="1.5"></iconify-icon>
-             <span>${formataDistancia(distancia)} de você</span>
-           </div>` : '';
 
     return `
     <div class="card">
@@ -3351,7 +3346,6 @@ function montaCardHTML(item, distancia) {
       <div class="card-top">
         <div class="card-info">
           <h3>${tituloCase(item.nome_fantasia)}</h3>
-          ${distHtml}
         </div>
         <div class="card-badges">
           ${badgeHorario}
